@@ -1,0 +1,106 @@
+body {
+    font: 62.5% 'Raleway', sans-serif;
+    margin: 0
+}
+
+main, header, nav {
+	display: block;
+}
+
+h1 {
+	font-size: 7em;
+    margin: 0
+}
+
+h2 {
+	font-size: 3em;
+}
+
+p {
+	font-size: 1.4em;
+	line-height: 18px
+}
+
+img {
+	display: block;
+	max-width: 100%
+}
+
+a {
+	color: #fff
+}
+
+.container {
+	margin: auto;
+    max-width: 800px;
+    padding: 0 15px
+}
+
+.banner {
+	background-color: #64C6AF;
+	color: #fff;
+	padding: 60px;
+	text-align: center
+}
+
+.banner p {
+	font-size: 3em;
+	line-height: 26px;
+    margin: 20px 0 40px;
+}
+
+.button {
+	background: #F77156;
+    cursor: pointer;
+    display: block;
+    font-size: 1.6em;
+    margin: 0 auto;
+    padding: 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 200px;
+}
+
+nav {
+	background-color: #64C6AF;
+	height: 70px;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+
+	 /* Translate -100% to move off screen */
+    -webkit-transform: translateY(-100%);
+       -moz-transform: translateY(-100%);
+        -ms-transform: translateY(-100%);
+            transform: translateY(-100%);
+
+    /* Animations */
+    -webkit-transition: all 300ms ease-in-out;
+       -moz-transition: all 300ms ease-in-out;
+            transition: all 300ms ease-in-out;
+}
+
+nav p {
+	color: #fff;
+	font-size: 3em;
+	line-height: 70px;
+	margin: 0;
+	text-align: center;
+}
+
+.sticky {
+    -webkit-transform: translateY(0%);
+       -moz-transform: translateY(0%);
+        -ms-transform: translateY(0%);
+            transform: translateY(0%);
+}
+
+/* For Old IEs */
+.no-transitions nav {
+	top: -70px;
+}
+
+.no-transitions .sticky {
+	top: 0;
+}

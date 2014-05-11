@@ -1,0 +1,15 @@
+{
+  "name": "Sticky",
+  "description": "VanillaJS + CSS3 Sticky Header",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:pinceladasdaweb/sticky.git"
+  },
+  "author": "Pedro Rogerio",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-contrib-uglify": "~0.3.2"
+  }
+}
