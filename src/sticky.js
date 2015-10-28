@@ -1,15 +1,3 @@
-/*
---------------------------------
-Sticky - Vanilla JS + CSS3 Sticky Header
---------------------------------
-+ https://github.com/pinceladasdaweb/sticky
-+ version 1.0.0
-+ Copyright 2014 Pedro Rogerio
-+ Licensed under the MIT license
-
-+ Documentation: https://github.com/pinceladasdaweb/sticky
-*/
-
 var supports = (function () {
     'use strict';
 
