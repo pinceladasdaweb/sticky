@@ -61,12 +61,10 @@
 
         <script src="../build/sticky.min.js"></script>
         <script>
-            (function() {
-                Sticky.init({
-                    target: 'nav',
-                    offset: 335 
-                });
-            }());
+            new Sticky({
+                target: 'nav',
+                offset: 335 
+            });
         </script>
     </body>
 </html>
