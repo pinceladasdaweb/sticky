@@ -1,109 +1,99 @@
-var supports = (function () {
-    'use strict';
-
-    var style = document.createElement('div').style,
-        vendors = ['', 'Moz', 'Webkit', 'Khtml', 'O', 'ms'],
-        prefix, i, l;
-
-    return function (prop) {
-        if (typeof style[prop] === 'string') {
-            return true;
-        }
-
-        prop = prop.replace(/^[a-z]/, function (val) {
-            return val.toUpperCase();
-        });
-
-        for (i = 0, l = vendors.length; i < l; i += 1) {
-            prefix = vendors[i] + prop;
-            if (typeof style[prefix] === 'string') {
-                return true;
-            }
-        }
-        return false;
-    };
-}());
-
-var Sticky = (function (d) {
+/*jslint browser: true, debug: true*/
+/*global define, module, exports*/
+(function (root, factory) {
     "use strict";
-    var module = {
-        config: function (config) {
-            this.offset  = config.offset;
-            this.target = config.target;
-        },
+    if (typeof define === 'function' && define.amd) {
+        define([], factory);
+    } else if (typeof exports === 'object') {
+        module.exports = factory();
+    } else {
+        root.Sticky = factory();
+    }
+}(this, function () {
+    "use strict";
+    var Sticky = function (options) {
+        if (!this || !(this instanceof Sticky)) {
+            return new Sticky(options);
+        }
+
+        if (!options) {
+            options = {};
+        }
+
+        this.target = options.target;
+        this.offset = options.offset;
+
+        this.ready();
+    };
+
+    Sticky.prototype = {
         hasClass: function (el, name) {
             return new RegExp('(\\s|^)' + name + '(\\s|$)').test(el.className);
         },
         addClass: function (el, name) {
-            var self = this;
-
-            if (!self.hasClass(el, name)) {
+            if (!this.hasClass(el, name)) {
                 el.className += (el.className ? ' ' : '') + name;
             }
         },
         removeClass: function (el, name) {
-            var self = this;
-
-            if (self.hasClass(el, name)) {
+            if (this.hasClass(el, name)) {
                 el.className = el.className.replace(new RegExp('(\\s|^)' + name + '(\\s|$)'), ' ').replace(/^\s+|\s+$/g, '');
             }
         },
-        addEvent: function (obj, type, fn) {
-            if (obj.attachEvent) {
-                obj['e' + type + fn] = fn;
-                obj[type + fn] = function () {
-                    obj['e' + type + fn](window.event);
-                }
-                obj.attachEvent('on' + type, obj[type + fn]);
-            } else {
-                obj.addEventListener(type, fn, false);
-            }
+        supportTrans: function () {
+            var s        = document.body.style,
+                supports = 'transition' in s || 'WebkitTransition' in s || 'MozTransition' in s || 'msTransition' in s || 'OTransition' in s;
+
+            return supports;
         },
-        getScroll: function () {
+        scrollPos: function () {
             if (window.pageYOffset !== undefined) {
                 return pageYOffset;
             } else {
-                var root = d.documentElement,
-                    body = d.body,
+                var root = document.documentElement,
+                    body = document.body,
                     scrollY;
 
                 scrollY = root.scrollTop || body.scrollTop || 0;
                 return scrollY;
             }
         },
-        attach: function (el) {
-            var self = this
+        trigger: function (eventName) {
+            var event = document.createEvent('HTMLEvents');
+            event.initEvent(eventName, true, false);
 
-            if (self.getScroll() > self.offset) {
-                self.addClass(el, 'sticky');
+            window.dispatchEvent(event);
+        },
+        handler: function () {
+            this.trigger('scroll');
+        },
+        attach: function (el) {
+            if (this.scrollPos() > this.offset) {
+                this.addClass(el, 'sticky');
             } else {
-                self.removeClass(el, 'sticky');
+                this.removeClass(el, 'sticky');
             }
         },
         ready: function () {
-            var self = this,
-                root = d.documentElement,
-                el   = d.querySelector(self.target);
+            var root   = document.documentElement,
+                el     = document.querySelector(this.target),
+                events = ['DOMContentLoaded', 'load', 'resize'],
+                i,
+                len;
 
-            if (!supports('transition')) {
-                self.addClass(root, 'no-transitions');
+            if (!this.supportTrans()) {
+                this.addClass(root, 'no-transitions');
             }
 
-            self.addEvent(window, 'load', function (e) {
-                self.attach(el);
-            });
+            window.addEventListener('scroll', function () {
+                this.attach(el);
+            }.bind(this), false);
 
-            self.addEvent(window, 'scroll', function (e) {
-                self.attach(el);
-            });
-        },
-        init: function (config) {
-            module.config(config);
-            module.ready();
+            for (i = 0, len = events.length; i < len; i += 1) {
+                window.addEventListener(events[i], this.handler(), false);
+            }
         }
     };
 
-    return {
-        init: module.init
-    };
-}(document));
+    return Sticky;
+}));
