@@ -19,8 +19,21 @@ Sticky is a [Vanilla JS](http://vanilla-js.com/) plugin with no dependancies. In
 <script>
 	new Sticky({
 	    target: 'nav',
-	    offset: 335 
+	    offset: 335
 	});
+</script>
+```
+
+Loading Sticky via AMD (require.js):
+
+```html
+<script>
+require(["path/to/sticky.min.js"], function(Sticky) {
+    new Sticky({
+        target: 'nav',
+        offset: 335
+    });
+});
 </script>
 ```
 
@@ -29,8 +42,8 @@ The script expect the following values:
 
 | Value                              | Description                                                 |
 | ---------------------------------- |:-----------------------------------------------------------:|
-| **target**                         | Element tagname, element class or element id |
-| **offset**                         | Scroll offset |
+| **target**                         | Element tagname, element class or element id                |
+| **offset**                         | Scroll offset                                               |
 
 ##Browser Support
 
